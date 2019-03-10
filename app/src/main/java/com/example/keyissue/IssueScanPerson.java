@@ -74,53 +74,61 @@ public class IssueScanPerson extends AppCompatActivity
             String scannedResult = result.getContents();
             String person[] = scannedResult.split("\n");
 
-            String person_name = scannedResult.split("\n")[0];
-            String person_roll = scannedResult.split("\n")[1];
-            String person_secret = scannedResult.split("\n")[2];
-
-            //checking if phone if connected to net or not
-            ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-            if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            //checking QR Code
+            if(person.length == 3)
             {
-                //checking if key is already issued
-                String type = "issue_key_for_a_person";
+                String person_name = scannedResult.split("\n")[0];
+                String person_roll = scannedResult.split("\n")[1];
+                String person_secret = scannedResult.split("\n")[2];
 
-                scan_person_qr_feed.setText("Key: " + key_name + "\n is issued to: \n Name: " + person_name);
-
-                try
+                //checking if phone if connected to net or not
+                ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
                 {
-                    String issue_key_for_a_personResult = new DatabaseActions().execute(type, key_name, key_secret, person_name, person_roll, person_secret).get();
+                    //checking if key is already issued
+                    String type = "issue_key_for_a_person";
 
-                    if(issue_key_for_a_personResult.equals("-1"))
-                    {
-                        scan_person_qr_feed.setText("Database issue found");
-                    }
-                    else if (issue_key_for_a_personResult.equals("Something went wrong"))
-                    {
-                        scan_person_qr_feed.setText(issue_key_for_a_personResult);
-                    }
-                    else if(issue_key_for_a_personResult.equals("1")) //key is successfully issued
-                    {
-                    //redirecting the done issuing page
-                        Intent IssueScanPersonIntent = new Intent(IssueScanPerson.this, DoneKeyIssue.class);
-                        startActivity(IssueScanPersonIntent);
-                        finish(); //used to delete the last activity history which we want to delete
-                    }
-                    else
-                    {
-                        scan_person_qr_feed.setText("unKnown Error");
-                    }
+                    scan_person_qr_feed.setText("Key: " + key_name + "\n is issued to: \n Name: " + person_name);
 
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    try
+                    {
+                        String issue_key_for_a_personResult = new DatabaseActions().execute(type, key_name, key_secret, person_name, person_roll, person_secret).get();
+
+                        if(issue_key_for_a_personResult.equals("-1"))
+                        {
+                            scan_person_qr_feed.setText("Database issue found");
+                        }
+                        else if (issue_key_for_a_personResult.equals("Something went wrong"))
+                        {
+                            scan_person_qr_feed.setText(issue_key_for_a_personResult);
+                        }
+                        else if(issue_key_for_a_personResult.equals("1")) //key is successfully issued
+                        {
+                            //redirecting the done issuing page
+                            Intent IssueScanPersonIntent = new Intent(IssueScanPerson.this, DoneKeyIssue.class);
+                            startActivity(IssueScanPersonIntent);
+                            finish(); //used to delete the last activity history which we want to delete
+                        }
+                        else
+                        {
+                            scan_person_qr_feed.setText("unKnown Error");
+                        }
+
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    scan_person_qr_feed.setText("Internet Connection is not available");
                 }
             }
             else
             {
-                scan_person_qr_feed.setText("Internet Connection is not available");
+                scan_person_qr_feed.setText("Wrong QR Code");
             }
         }
 
