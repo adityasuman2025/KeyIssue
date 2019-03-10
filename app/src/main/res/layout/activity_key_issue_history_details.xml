@@ -73,5 +73,20 @@
             android:textSize= "50px"
             />
 
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10px"
+            android:layout_marginTop="100px"
+            android:layout_marginLeft="20px"
+            android:textSize= "70px"
+            android:text="NA"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="center"
+
+            />
+
     </LinearLayout>
 </ScrollView>

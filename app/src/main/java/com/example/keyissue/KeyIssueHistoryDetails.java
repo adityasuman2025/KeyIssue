@@ -29,6 +29,8 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
     TextView returned_by_name;
     TextView returned_by_roll;
 
+    TextView status;
+
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -47,6 +49,8 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
 
         returned_by_name = findViewById(R.id.returned_by_name);
         returned_by_roll = findViewById(R.id.returned_by_roll);
+
+        status = findViewById(R.id.status);
 
     //checking cookies
         sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
@@ -81,6 +85,14 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
 
                         String returned_by_name_str = jo.getString("returned_by_name");
                         String returned_by_roll_str = jo.getString("returned_by_roll");
+
+                        String status_str = jo.getString("status");
+                        if(status_str.equals("1"))
+                            status.setText("Not Returned");
+                        else if(status_str.equals("2"))
+                            status.setText("Returned");
+                        else
+                            status.setText("NA");
 
                         key_name.setText(key_name_str);
                         issue_date.setText(issued_on_str);
