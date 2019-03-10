@@ -18,10 +18,19 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListIssuedKeys"></activity>
-        <activity android:name=".DoneKeyIssue" />
-        <activity android:name=".IssueScanPerson" />
-        <activity android:name=".IssueScanKey" />
+        <activity android:name=".IssuedKeysHistory"></activity>
+        <activity
+            android:name=".ListIssuedKeys"
+            android:label="List Issued Keys" />
+        <activity
+            android:name=".DoneKeyIssue"
+            android:label="Key Successfully Issued" />
+        <activity
+            android:name=".IssueScanPerson"
+            android:label="Issue Scan Person" />
+        <activity
+            android:name=".IssueScanKey"
+            android:label="Issue Scan Key" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

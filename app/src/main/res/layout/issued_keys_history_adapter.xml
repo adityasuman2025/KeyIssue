@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:id="@+id/ok"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_toEndOf="@id/key_icon"
@@ -58,4 +58,19 @@
             android:text="Roll"
             android:textSize="45px"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/issue_status"
+        android:layout_width="wrap_content"
+        android:layout_height="250px"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="R"
+        android:textStyle="bold"
+        android:textSize="130px"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:paddingTop="50px"
+        android:paddingRight="15px"
+        />
 </RelativeLayout>

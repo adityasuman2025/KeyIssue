@@ -46,5 +46,17 @@ public class MainActivity extends AppCompatActivity
                 startActivity(ListIssuedKeysIntent);
             }
         });
+
+    //on clicking on history btn
+        history_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+            //redirecting to list issued keys history
+                Intent IssuedKeysHistoryIntent = new Intent(MainActivity.this, IssuedKeysHistory.class);
+                startActivity(IssuedKeysHistoryIntent);
+            }
+        });
     }
 }

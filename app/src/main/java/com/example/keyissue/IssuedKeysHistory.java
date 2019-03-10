@@ -19,7 +19,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
-public class ListIssuedKeys extends AppCompatActivity
+public class IssuedKeysHistory extends AppCompatActivity
 {
     TextView text;
     ListView listIssuedKeys;
@@ -31,31 +31,29 @@ public class ListIssuedKeys extends AppCompatActivity
     String issued_by_names[];
     String issued_by_rolls[];
     String issued_ons[];
+    String statuses[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_issued_keys);
+        setContentView(R.layout.activity_issued_keys_history);
 
-        text = findViewById(R.id.text);
-        listIssuedKeys = findViewById(R.id.listIssuedKeys);
-
-    //checking if phone if connected to net or not
+        //checking if phone if connected to net or not
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
         {
             try
             {
-            //to list all the not returned keys
-                type= "list_not_returned_keys";
-                String list_not_returned_keysResult = (new DatabaseActions().execute(type).get());
+                //to list all the not returned keys
+                type= "list_issued_keys_history";
+                String list_issued_keys_historyResult = (new DatabaseActions().execute(type).get());
 
-                if(!list_not_returned_keysResult.equals("0") && !list_not_returned_keysResult.equals("-1") && !list_not_returned_keysResult.equals("Something went wrong"))
+                if(!list_issued_keys_historyResult.equals("0") && !list_issued_keys_historyResult.equals("-1") && !list_issued_keys_historyResult.equals("Something went wrong"))
                 {
                     //parse JSON data
-                    JSONArray ja = new JSONArray(list_not_returned_keysResult);
+                    JSONArray ja = new JSONArray(list_issued_keys_historyResult);
                     JSONObject jo = null;
 
                     issue_ids = new String[ja.length()];
@@ -63,6 +61,7 @@ public class ListIssuedKeys extends AppCompatActivity
                     issued_by_names = new String[ja.length()];
                     issued_by_rolls = new String[ja.length()];
                     issued_ons = new String[ja.length()];
+                    statuses = new String[ja.length()];
 
                     for (int i =0; i<ja.length(); i++)
                     {
@@ -74,6 +73,7 @@ public class ListIssuedKeys extends AppCompatActivity
                         String issued_by_name = jo.getString("issued_by_name");
                         String issued_by_roll = jo.getString("issued_by_roll");
                         String issued_on = jo.getString("issued_on");
+                        String status = jo.getString("status");
 
                         issue_ids[i] = issue_id;
                         key_names[i] = key_name;
@@ -81,24 +81,25 @@ public class ListIssuedKeys extends AppCompatActivity
                         issued_by_names[i] = issued_by_name;
                         issued_by_rolls[i] = issued_by_roll;
                         issued_ons[i] = issued_on;
+                        statuses[i] = status;
                     }
 
-                    //listing not returned keys
-                    IssuedKeyDetailsAdapter issuedKeyDetailsAdapter = new IssuedKeyDetailsAdapter();
-                    listIssuedKeys.setAdapter(issuedKeyDetailsAdapter);
+                    //listing all the ever issued keys in listview
+                    IssuedKeysHistoryAdapter issuedKeysHistoryAdapter = new IssuedKeysHistoryAdapter();
+                    listIssuedKeys.setAdapter(issuedKeysHistoryAdapter);
 
                     //on clicking on list
                     listIssuedKeys.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
                         {
-                            Toast.makeText(ListIssuedKeys.this, issue_ids[position], Toast.LENGTH_SHORT).show();
+                            Toast.makeText(IssuedKeysHistory.this, issue_ids[position], Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
                 else
                 {
-                    text.setText("Something went wrong in listing not-returned keys");
+                    text.setText("Something went wrong in listing the issued keys history");
                 }
             }
             catch (ExecutionException e) {
@@ -115,8 +116,8 @@ public class ListIssuedKeys extends AppCompatActivity
         }
     }
 
-//creating custom adapter to list issued keys
-    class IssuedKeyDetailsAdapter extends BaseAdapter
+    //creating custom adapter to list issued keys
+    class IssuedKeysHistoryAdapter extends BaseAdapter
     {
         @Override
         public int getCount() {
@@ -145,6 +146,7 @@ public class ListIssuedKeys extends AppCompatActivity
 
             TextView issued_by_name = view.findViewById(R.id.issued_by_name);
             TextView issued_by_roll = view.findViewById(R.id.issued_by_roll);
+            TextView issue_status = view.findViewById(R.id.issue_status);
 
             //setting the variables to a value
             key_name.setText(key_names[i]);
@@ -152,6 +154,19 @@ public class ListIssuedKeys extends AppCompatActivity
 
             issued_by_name.setText(issued_by_names[i]);
             issued_by_roll.setText(issued_by_rolls[i]);
+
+            //
+            String status = "NA";
+            if(statuses[i].equals("1"))//not returned
+            {
+                status = "N-R"; //Not-Returned
+            }
+            else if(statuses[i].equals("2"))//returned
+            {
+                status = "R"; //Returned
+            }
+
+            issue_status.setText(status);
 
             return view;
         }
