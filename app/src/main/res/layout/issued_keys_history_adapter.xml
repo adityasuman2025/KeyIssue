@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/key_icon"
         android:layout_width="140px"
-        android:layout_height="250px"
+        android:layout_height="140px"
         app:srcCompat="@drawable/key" />
 
     <LinearLayout
@@ -22,7 +22,7 @@
         android:layout_toRightOf="@id/key_icon"
         android:orientation="vertical"
         android:paddingLeft="20px"
-        android:paddingTop="10px">
+        android:paddingTop="5px">
 
         <TextView
             android:id="@+id/key_name"
@@ -40,37 +40,20 @@
             android:layout_height="wrap_content"
             android:text="date"
             android:textSize="40px"/>
-
-        <TextView
-            android:id="@+id/issued_by_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textSize="45px"
-
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"/>
-
-        <TextView
-            android:id="@+id/issued_by_roll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Roll"
-            android:textSize="45px"/>
     </LinearLayout>
 
     <TextView
         android:id="@+id/issue_status"
         android:layout_width="wrap_content"
-        android:layout_height="250px"
+        android:layout_height="140px"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:text="R"
         android:textStyle="bold"
-        android:textSize="110px"
+        android:textSize="90px"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
-        android:paddingTop="50px"
+        android:paddingTop="20px"
         android:paddingRight="15px"
         />
 </RelativeLayout>

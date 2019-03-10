@@ -18,7 +18,8 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IssuedKeysHistory"></activity>
+        <activity android:name=".KeyIssueHistoryDetails"></activity>
+        <activity android:name=".IssuedKeysHistory" />
         <activity
             android:name=".ListIssuedKeys"
             android:label="List Issued Keys" />

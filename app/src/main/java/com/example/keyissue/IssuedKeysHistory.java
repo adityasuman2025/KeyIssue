@@ -1,6 +1,8 @@
 package com.example.keyissue;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +35,9 @@ public class IssuedKeysHistory extends AppCompatActivity
     String issued_ons[];
     String statuses[];
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,6 +46,10 @@ public class IssuedKeysHistory extends AppCompatActivity
 
         text = findViewById(R.id.text);
         listIssuedKeys = findViewById(R.id.listIssuedKeys);
+
+        //checking cookies
+        sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         //checking if phone if connected to net or not
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -96,7 +105,12 @@ public class IssuedKeysHistory extends AppCompatActivity
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
                         {
-                            Toast.makeText(IssuedKeysHistory.this, issue_ids[position], Toast.LENGTH_SHORT).show();
+                            editor.putString("key_issue_history_of_id", issue_ids[position]);
+                            editor.apply();
+
+                        //redirecting the key issue history details page
+                            Intent KeyIssueHistoryDetailsIntent = new Intent(IssuedKeysHistory.this, KeyIssueHistoryDetails.class);
+                            startActivity(KeyIssueHistoryDetailsIntent);
                         }
                     });
                 }
@@ -147,18 +161,12 @@ public class IssuedKeysHistory extends AppCompatActivity
             TextView key_name = view.findViewById(R.id.key_name);
             TextView issue_date = view.findViewById(R.id.issue_date);
 
-            TextView issued_by_name = view.findViewById(R.id.issued_by_name);
-            TextView issued_by_roll = view.findViewById(R.id.issued_by_roll);
             TextView issue_status = view.findViewById(R.id.issue_status);
 
             //setting the variables to a value
             key_name.setText(key_names[i]);
             issue_date.setText(issued_ons[i]);
 
-            issued_by_name.setText(issued_by_names[i]);
-            issued_by_roll.setText(issued_by_rolls[i]);
-
-            //
             String status = "NA";
             if(statuses[i].equals("1"))//not returned
             {

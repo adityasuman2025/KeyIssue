@@ -42,8 +42,8 @@ public class IssueScanPerson extends AppCompatActivity
         editor = sharedPreferences.edit();
 
     //getting the key details
-        key_name = sharedPreferences.getString("key_name", "DNE");;
-        key_secret = sharedPreferences.getString("key_secret", "DNE");;
+        key_name = sharedPreferences.getString("key_name", "DNE");
+        key_secret = sharedPreferences.getString("key_secret", "DNE");
 
     //on clicking on scan person qr btn
         scan_person_qr_btn.setOnClickListener(new View.OnClickListener()
