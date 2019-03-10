@@ -18,7 +18,8 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DoneKeyIssue"></activity>
+        <activity android:name=".ListIssuedKeys"></activity>
+        <activity android:name=".DoneKeyIssue" />
         <activity android:name=".IssueScanPerson" />
         <activity android:name=".IssueScanKey" />
         <activity android:name=".MainActivity">

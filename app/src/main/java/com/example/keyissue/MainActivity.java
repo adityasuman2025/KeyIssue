@@ -29,10 +29,21 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-            //redirecting the list course page
+            //redirecting to issue key page
                 Intent IssueScanKeyIntent = new Intent(MainActivity.this, IssueScanKey.class);
                 startActivity(IssueScanKeyIntent);
-                //finish(); //used to delete the last activity history which we want to delete
+            }
+        });
+
+    //on clicking on return btn
+        return_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+            //redirecting to list issued keys page
+                Intent ListIssuedKeysIntent = new Intent(MainActivity.this, ListIssuedKeys.class);
+                startActivity(ListIssuedKeysIntent);
             }
         });
     }
