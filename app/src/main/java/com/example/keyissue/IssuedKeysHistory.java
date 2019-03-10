@@ -39,6 +39,9 @@ public class IssuedKeysHistory extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issued_keys_history);
 
+        text = findViewById(R.id.text);
+        listIssuedKeys = findViewById(R.id.listIssuedKeys);
+
         //checking if phone if connected to net or not
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
@@ -138,7 +141,7 @@ public class IssuedKeysHistory extends AppCompatActivity
         public View getView(int i, View view, ViewGroup viewGroup)
         {
             //rendering the layout
-            view = getLayoutInflater().inflate(R.layout.issued_key_details_adapter, null);
+            view = getLayoutInflater().inflate(R.layout.issued_keys_history_adapter, null);
 
             //defining variables
             TextView key_name = view.findViewById(R.id.key_name);

@@ -67,7 +67,7 @@
         android:layout_alignParentEnd="true"
         android:text="R"
         android:textStyle="bold"
-        android:textSize="130px"
+        android:textSize="110px"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:paddingTop="50px"
