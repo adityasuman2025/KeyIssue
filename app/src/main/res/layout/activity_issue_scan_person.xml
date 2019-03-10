@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IssueScanPerson">
+
+    <Button
+        android:id="@+id/scan_person_qr_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan Person QR"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="50px"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
+        android:padding="15px"/>
+
+    <TextView
+        android:id="@+id/scan_person_qr_feed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_below="@+id/scan_person_qr_btn"
+        android:textSize="45px" />
+
+</RelativeLayout>
