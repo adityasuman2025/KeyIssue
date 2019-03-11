@@ -74,6 +74,15 @@
             />
 
         <TextView
+            android:id="@+id/return_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10px"
+            android:layout_marginLeft="20px"
+            android:textSize= "50px"
+            />
+
+        <TextView
             android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,7 +94,6 @@
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"
             android:textAlignment="center"
-
             />
 
     </LinearLayout>

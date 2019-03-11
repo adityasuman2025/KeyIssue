@@ -16,6 +16,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class KeyIssueHistoryDetails extends AppCompatActivity {
@@ -28,6 +32,8 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
 
     TextView returned_by_name;
     TextView returned_by_roll;
+
+    TextView return_date;
 
     TextView status;
 
@@ -49,6 +55,8 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
 
         returned_by_name = findViewById(R.id.returned_by_name);
         returned_by_roll = findViewById(R.id.returned_by_roll);
+
+        return_date = findViewById(R.id.return_date);
 
         status = findViewById(R.id.status);
 
@@ -78,7 +86,6 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
                         jo = ja.getJSONObject(i);
 
                         String key_name_str = jo.getString("key_name");
-                        String issued_on_str = jo.getString("issued_on");
 
                         String issued_by_name_str = jo.getString("issued_by_name");
                         String issued_by_roll_str = jo.getString("issued_by_roll");
@@ -86,6 +93,22 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
                         String returned_by_name_str = jo.getString("returned_by_name");
                         String returned_by_roll_str = jo.getString("returned_by_roll");
 
+                    //formatting and displaying date
+                        String issued_on_str = jo.getString("issued_on");
+                        String returned_on_str = jo.getString("returned_on");
+
+                        Date issued_onDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(issued_on_str);
+                        Date returned_onDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(returned_on_str);
+
+                        DateFormat df = new SimpleDateFormat("dd MMM yyyy, h:mm a");
+
+                        String issued_onDate_str = df.format(issued_onDate);
+                        String returned_onDate_str = df.format(returned_onDate);
+
+                        issue_date.setText("Issued On: " +  issued_onDate_str);
+                        return_date.setText("Returned On: " + returned_onDate_str);
+
+                    //showing status
                         String status_str = jo.getString("status");
                         if(status_str.equals("1"))
                             status.setText("Not Returned");
@@ -95,7 +118,6 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
                             status.setText("NA");
 
                         key_name.setText(key_name_str);
-                        issue_date.setText(issued_on_str);
 
                         issued_by_name.setText("Issued By: " + issued_by_name_str);
                         issued_by_roll.setText("Roll No: " + issued_by_roll_str);
@@ -111,6 +133,8 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
