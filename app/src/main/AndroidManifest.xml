@@ -18,9 +18,12 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DoneKeyReturn"></activity>
-        <activity android:name=".ReturnScanPerson" />
-        <activity android:name=".ReturnScanKey" />
+        <activity android:name=".DoneKeyReturn"
+            android:label="Confirm Key Return" />
+        <activity android:name=".ReturnScanPerson"
+            android:label="Return Scan Person" />
+        <activity android:name=".ReturnScanKey"
+            android:label="Return Scan Key" />
         <activity
             android:name=".KeyIssueHistoryDetails"
             android:label="Issued Key Details" />
@@ -29,16 +32,17 @@
             android:label="Issued Keys History" />
         <activity
             android:name=".ListIssuedKeys"
-            android:label="List Issued Keys" />
+            android:label="List Not-Returned Keys" />
         <activity
             android:name=".DoneKeyIssue"
-            android:label="Key Successfully Issued" />
+            android:label="Confirm Key Issue" />
         <activity
             android:name=".IssueScanPerson"
             android:label="Issue Scan Person" />
         <activity
             android:name=".IssueScanKey"
             android:label="Issue Scan Key" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
