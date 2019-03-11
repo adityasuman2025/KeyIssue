@@ -19,6 +19,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class ListIssuedKeys extends AppCompatActivity
@@ -82,14 +86,22 @@ public class ListIssuedKeys extends AppCompatActivity
 
                         String issued_by_name = jo.getString("issued_by_name");
                         String issued_by_roll = jo.getString("issued_by_roll");
+
+                        //getting and formatting date
                         String issued_on = jo.getString("issued_on");
+
+                        Date issued_onDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(issued_on);
+
+                        DateFormat df = new SimpleDateFormat("dd MMM yyyy, h:mm a");
+
+                        String issued_onDate_str = df.format(issued_onDate);
 
                         issue_ids[i] = issue_id;
                         key_names[i] = key_name;
 
                         issued_by_names[i] = issued_by_name;
                         issued_by_rolls[i] = issued_by_roll;
-                        issued_ons[i] = issued_on;
+                        issued_ons[i] = issued_onDate_str;
                     }
 
                     //listing not returned keys
@@ -121,6 +133,8 @@ public class ListIssuedKeys extends AppCompatActivity
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
