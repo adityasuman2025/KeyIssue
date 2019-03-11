@@ -88,41 +88,6 @@ public class IssueScanPerson extends AppCompatActivity
                     Intent DoneKeyIssueIntent = new Intent(IssueScanPerson.this, DoneKeyIssue.class);
                     startActivity(DoneKeyIssueIntent);
                     finish(); //used to delete the last activity history which we want to delete
-
-                //issuing the key to that person
-//                    String type = "issue_key_for_a_person";
-//
-//                    scan_person_qr_feed.setText("Key: " + key_name + "\n is issued to: \n Name: " + person_name);
-//
-//                    try
-//                    {
-//                        String issue_key_for_a_personResult = new DatabaseActions().execute(type, key_name, key_secret, person_name, person_roll, person_secret).get();
-//
-//                        if(issue_key_for_a_personResult.equals("-1"))
-//                        {
-//                            scan_person_qr_feed.setText("Database issue found");
-//                        }
-//                        else if (issue_key_for_a_personResult.equals("Something went wrong"))
-//                        {
-//                            scan_person_qr_feed.setText(issue_key_for_a_personResult);
-//                        }
-//                        else if(issue_key_for_a_personResult.equals("1")) //key is successfully issued
-//                        {
-//                            //redirecting the done issuing page
-//                            Intent IssueScanPersonIntent = new Intent(IssueScanPerson.this, DoneKeyIssue.class);
-//                            startActivity(IssueScanPersonIntent);
-//                            finish(); //used to delete the last activity history which we want to delete
-//                        }
-//                        else
-//                        {
-//                            scan_person_qr_feed.setText("unKnown Error");
-//                        }
-//
-//                    } catch (ExecutionException e) {
-//                        e.printStackTrace();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
                 }
                 else
                 {
