@@ -1,6 +1,8 @@
 package com.example.keyissue;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,9 @@ public class ListIssuedKeys extends AppCompatActivity
     String issued_by_rolls[];
     String issued_ons[];
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -40,6 +45,10 @@ public class ListIssuedKeys extends AppCompatActivity
 
         text = findViewById(R.id.text);
         listIssuedKeys = findViewById(R.id.listIssuedKeys);
+
+        //checking cookies
+        sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
     //checking if phone if connected to net or not
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -92,7 +101,13 @@ public class ListIssuedKeys extends AppCompatActivity
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
                         {
-                            Toast.makeText(ListIssuedKeys.this, issue_ids[position], Toast.LENGTH_SHORT).show();
+                            editor.putString("return_key_id", issue_ids[position]);
+                            editor.apply();
+
+                        //redirecting the key qr scan page for returning the key
+                            Intent ReturnScanKeyIntent = new Intent(ListIssuedKeys.this, ReturnScanKey.class);
+                            startActivity(ReturnScanKeyIntent);
+                            finish();
                         }
                     });
                 }
