@@ -34,7 +34,6 @@ public class DoneKeyReturn extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +111,7 @@ public class DoneKeyReturn extends AppCompatActivity {
                             }
                             else
                             {
-                                text.setText("Something went wrong in returning the issued keys details");
+                                text.setText("Something went wrong in returning the issued key");
                             }
 
                         } catch (ExecutionException e) {

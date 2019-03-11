@@ -22,9 +22,6 @@ public class IssueScanPerson extends AppCompatActivity
     Button scan_person_qr_btn;
     TextView scan_person_qr_feed;
 
-    String key_name;
-    String key_secret;
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -40,10 +37,6 @@ public class IssueScanPerson extends AppCompatActivity
     //checking cookies
         sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
-    //getting the key details
-        key_name = sharedPreferences.getString("key_name", "DNE");
-        key_secret = sharedPreferences.getString("key_secret", "DNE");
 
     //on clicking on scan person qr btn
         scan_person_qr_btn.setOnClickListener(new View.OnClickListener()
@@ -86,40 +79,50 @@ public class IssueScanPerson extends AppCompatActivity
                 if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
                 {
+                    editor.putString("issue_person_name", person_name);
+                    editor.putString("issue_person_roll", person_roll);
+                    editor.putString("issue_person_secret", person_secret);
+                    editor.apply();
+
+                    //redirecting the done issuing page
+                    Intent DoneKeyIssueIntent = new Intent(IssueScanPerson.this, DoneKeyIssue.class);
+                    startActivity(DoneKeyIssueIntent);
+                    finish(); //used to delete the last activity history which we want to delete
+
                 //issuing the key to that person
-                    String type = "issue_key_for_a_person";
-
-                    scan_person_qr_feed.setText("Key: " + key_name + "\n is issued to: \n Name: " + person_name);
-
-                    try
-                    {
-                        String issue_key_for_a_personResult = new DatabaseActions().execute(type, key_name, key_secret, person_name, person_roll, person_secret).get();
-
-                        if(issue_key_for_a_personResult.equals("-1"))
-                        {
-                            scan_person_qr_feed.setText("Database issue found");
-                        }
-                        else if (issue_key_for_a_personResult.equals("Something went wrong"))
-                        {
-                            scan_person_qr_feed.setText(issue_key_for_a_personResult);
-                        }
-                        else if(issue_key_for_a_personResult.equals("1")) //key is successfully issued
-                        {
-                            //redirecting the done issuing page
-                            Intent IssueScanPersonIntent = new Intent(IssueScanPerson.this, DoneKeyIssue.class);
-                            startActivity(IssueScanPersonIntent);
-                            finish(); //used to delete the last activity history which we want to delete
-                        }
-                        else
-                        {
-                            scan_person_qr_feed.setText("unKnown Error");
-                        }
-
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    String type = "issue_key_for_a_person";
+//
+//                    scan_person_qr_feed.setText("Key: " + key_name + "\n is issued to: \n Name: " + person_name);
+//
+//                    try
+//                    {
+//                        String issue_key_for_a_personResult = new DatabaseActions().execute(type, key_name, key_secret, person_name, person_roll, person_secret).get();
+//
+//                        if(issue_key_for_a_personResult.equals("-1"))
+//                        {
+//                            scan_person_qr_feed.setText("Database issue found");
+//                        }
+//                        else if (issue_key_for_a_personResult.equals("Something went wrong"))
+//                        {
+//                            scan_person_qr_feed.setText(issue_key_for_a_personResult);
+//                        }
+//                        else if(issue_key_for_a_personResult.equals("1")) //key is successfully issued
+//                        {
+//                            //redirecting the done issuing page
+//                            Intent IssueScanPersonIntent = new Intent(IssueScanPerson.this, DoneKeyIssue.class);
+//                            startActivity(IssueScanPersonIntent);
+//                            finish(); //used to delete the last activity history which we want to delete
+//                        }
+//                        else
+//                        {
+//                            scan_person_qr_feed.setText("unKnown Error");
+//                        }
+//
+//                    } catch (ExecutionException e) {
+//                        e.printStackTrace();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
                 else
                 {

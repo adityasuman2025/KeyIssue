@@ -22,9 +22,6 @@ public class ReturnScanPerson extends AppCompatActivity {
     Button scan_person_qr_btn;
     TextView scan_person_qr_feed;
 
-    String key_name;
-    String key_secret;
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 

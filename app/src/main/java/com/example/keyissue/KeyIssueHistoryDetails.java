@@ -105,6 +105,11 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
                         String issued_onDate_str = df.format(issued_onDate);
                         String returned_onDate_str = df.format(returned_onDate);
 
+                        if(returned_onDate_str.equals("30 Nov 0002, 12:00 AM"))
+                        {
+                            returned_onDate_str = "NA";
+                        }
+
                         issue_date.setText("Issued On: " +  issued_onDate_str);
                         return_date.setText("Returned On: " + returned_onDate_str);
 
