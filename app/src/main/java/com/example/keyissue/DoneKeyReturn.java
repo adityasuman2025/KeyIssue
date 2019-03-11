@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.concurrent.ExecutionException;
 
 public class DoneKeyReturn extends AppCompatActivity {
@@ -29,6 +33,7 @@ public class DoneKeyReturn extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +56,9 @@ public class DoneKeyReturn extends AppCompatActivity {
     //getting the key details
         final String return_key_id = sharedPreferences.getString("return_key_id", "DNE");
 
-        String return_person_name = sharedPreferences.getString("return_person_name", "DNE");
-        String return_person_roll = sharedPreferences.getString("return_person_roll", "DNE");
-        String return_person_secret = sharedPreferences.getString("return_person_secret", "DNE");
+        final String return_person_name = sharedPreferences.getString("return_person_name", "DNE");
+        final String return_person_roll = sharedPreferences.getString("return_person_roll", "DNE");
+        final String return_person_secret = sharedPreferences.getString("return_person_secret", "DNE");
 
         if(return_person_name != null && return_person_roll!= null && return_person_secret != null)
         {
@@ -92,7 +97,29 @@ public class DoneKeyReturn extends AppCompatActivity {
                     @Override
                     public void onClick(View view)
                     {
-                        Toast.makeText(DoneKeyReturn.this, return_key_id, Toast.LENGTH_SHORT).show();
+                    //updating the return person details in the database
+                        try
+                        {
+                            String type = "return_issued_key";
+                            String return_issued_keyResult = (new DatabaseActions().execute(type, return_key_id, return_person_name, return_person_roll, return_person_secret).get());
+
+                            if(return_issued_keyResult.equals("1"))
+                            {
+                                Toast.makeText(DoneKeyReturn.this, "Key Successfully Returned", Toast.LENGTH_LONG).show();
+
+                            //redirecting to the main page
+                                finish();
+                            }
+                            else
+                            {
+                                text.setText("Something went wrong in returning the issued keys details");
+                            }
+
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }

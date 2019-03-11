@@ -276,6 +276,61 @@ public class DatabaseActions extends AsyncTask<String,Void,String>
                 e.printStackTrace();
             }
         }
+        else if (type.equals("return_issued_key"))
+        {
+            String login_url = base_url + "return_issued_key.php";
+            try {
+                String issue_id = params[1];
+
+                String returned_by_name = params[2];
+                String returned_by_roll = params[3];
+                String returned_by_secret = params[4];
+
+                //connecting with server
+                url = new URL(login_url);
+                HttpURLConnection httpURLConnection = null;
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                //sending data to the server
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+
+                String post_data = URLEncoder.encode("issue_id", "UTF-8") + "=" + URLEncoder.encode(issue_id, "UTF-8") + "&"
+                        + URLEncoder.encode("returned_by_name", "UTF-8") + "=" + URLEncoder.encode(returned_by_name, "UTF-8")  + "&"
+                        + URLEncoder.encode("returned_by_roll", "UTF-8") + "=" + URLEncoder.encode(returned_by_roll, "UTF-8")  + "&"
+                        + URLEncoder.encode("returned_by_secret", "UTF-8") + "=" + URLEncoder.encode(returned_by_secret, "UTF-8");
+
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+
+                //getting the data coming from server
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+
+                result = "";
+                String line;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         return result;
     }
