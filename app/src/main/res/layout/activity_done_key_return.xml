@@ -24,7 +24,7 @@
             android:id="@+id/person_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ok"/>
+            android:layout_marginBottom="100px"/>
 
         <TextView
             android:id="@+id/person_name"
@@ -51,6 +51,7 @@
             android:textAlignment="center">
 
             <Button
+                android:id="@+id/return_btn"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -59,6 +60,7 @@
                 android:text="Return"/>
 
             <Button
+                android:id="@+id/cancel_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

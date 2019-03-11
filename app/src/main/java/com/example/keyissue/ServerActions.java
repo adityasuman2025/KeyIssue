@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -29,12 +30,23 @@ public class ServerActions  extends AsyncTask<String, Void, Bitmap>
 
                 url = new URL(login_url);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
                 connection.setDoInput(true);
                 connection.connect();
+
                 InputStream input = connection.getInputStream();
                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
 
                 result = myBitmap;
+
+//                if(connection.getResponseCode() != HttpURLConnection.HTTP_OK)
+//                {
+//                    return null;
+//                }
+//                else
+//                {
+//
+//                }
             }catch (Exception e){
                 e.printStackTrace();
             }

@@ -8,8 +8,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -20,6 +23,9 @@ public class DoneKeyReturn extends AppCompatActivity {
     ImageView person_image;
     TextView person_name;
     TextView person_roll;
+
+    Button return_btn;
+    Button cancel_btn;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -35,12 +41,15 @@ public class DoneKeyReturn extends AppCompatActivity {
         person_name = findViewById(R.id.person_name);
         person_roll = findViewById(R.id.person_roll);
 
+        return_btn = findViewById(R.id.return_btn);
+        cancel_btn = findViewById(R.id.cancel_btn);
+
     //checking cookies
         sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
     //getting the key details
-        String return_key_id = sharedPreferences.getString("return_key_id", "DNE");
+        final String return_key_id = sharedPreferences.getString("return_key_id", "DNE");
 
         String return_person_name = sharedPreferences.getString("return_person_name", "DNE");
         String return_person_roll = sharedPreferences.getString("return_person_roll", "DNE");
@@ -53,16 +62,16 @@ public class DoneKeyReturn extends AppCompatActivity {
             if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                     connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
             {
-                person_name.setText(return_person_name);
-                person_roll.setText(return_person_roll.toLowerCase());
+                person_name.setText("Name: " + return_person_name);
+                person_roll.setText("Roll: " + return_person_roll);
 
-            //getting the photo of that person
+            //getting the photo of that person and setting it
                 String type = "get_person_photo";
                 try
                 {
                     Bitmap person_imageBitmap = new ServerActions().execute(type, return_person_roll.toLowerCase()).get();
 
-                    if(person_imageBitmap.equals(null))
+                    if(person_imageBitmap == null)
                     {
                         text.setText("Person image not found on server");
                     }
@@ -76,6 +85,16 @@ public class DoneKeyReturn extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+            //on clicking on return button
+                return_btn.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        Toast.makeText(DoneKeyReturn.this, return_key_id, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             else
             {
@@ -86,5 +105,13 @@ public class DoneKeyReturn extends AppCompatActivity {
         {
             text.setText("Wrong QR Code");
         }
+
+    //on clicking on cancel button
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }
