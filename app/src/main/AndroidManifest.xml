@@ -18,7 +18,9 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReturnScanKey"></activity>
+        <activity android:name=".DoneKeyReturn"></activity>
+        <activity android:name=".ReturnScanPerson" />
+        <activity android:name=".ReturnScanKey" />
         <activity
             android:name=".KeyIssueHistoryDetails"
             android:label="Issued Key Details" />

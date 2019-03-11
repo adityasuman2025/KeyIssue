@@ -17,8 +17,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.concurrent.ExecutionException;
 
-public class IssueScanPerson extends AppCompatActivity
-{
+public class ReturnScanPerson extends AppCompatActivity {
+
     Button scan_person_qr_btn;
     TextView scan_person_qr_feed;
 
@@ -29,29 +29,24 @@ public class IssueScanPerson extends AppCompatActivity
     SharedPreferences.Editor editor;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_issue_scan_person);
+        setContentView(R.layout.activity_return_scan_person);
 
         scan_person_qr_btn = findViewById(R.id.scan_person_qr_btn);
         scan_person_qr_feed = findViewById(R.id.scan_person_qr_feed);
 
-    //checking cookies
+        //checking cookies
         sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-    //getting the key details
-        key_name = sharedPreferences.getString("key_name", "DNE");
-        key_secret = sharedPreferences.getString("key_secret", "DNE");
-
-    //on clicking on scan person qr btn
+        //on clicking on scan person qr btn
         scan_person_qr_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(IssueScanPerson.this);
+                IntentIntegrator intentIntegrator = new IntentIntegrator(ReturnScanPerson.this);
                 intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                 intentIntegrator.setCameraId(0);
                 intentIntegrator.setOrientationLocked(false);
@@ -86,40 +81,15 @@ public class IssueScanPerson extends AppCompatActivity
                 if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
                 {
-                //issuing the key to that person
-                    String type = "issue_key_for_a_person";
+                    editor.putString("return_person_name", person_name);
+                    editor.putString("return_person_roll", person_roll);
+                    editor.putString("return_person_secret", person_secret);
+                    editor.apply();
 
-                    scan_person_qr_feed.setText("Key: " + key_name + "\n is issued to: \n Name: " + person_name);
-
-                    try
-                    {
-                        String issue_key_for_a_personResult = new DatabaseActions().execute(type, key_name, key_secret, person_name, person_roll, person_secret).get();
-
-                        if(issue_key_for_a_personResult.equals("-1"))
-                        {
-                            scan_person_qr_feed.setText("Database issue found");
-                        }
-                        else if (issue_key_for_a_personResult.equals("Something went wrong"))
-                        {
-                            scan_person_qr_feed.setText(issue_key_for_a_personResult);
-                        }
-                        else if(issue_key_for_a_personResult.equals("1")) //key is successfully issued
-                        {
-                            //redirecting the done issuing page
-                            Intent IssueScanPersonIntent = new Intent(IssueScanPerson.this, DoneKeyIssue.class);
-                            startActivity(IssueScanPersonIntent);
-                            finish(); //used to delete the last activity history which we want to delete
-                        }
-                        else
-                        {
-                            scan_person_qr_feed.setText("unKnown Error");
-                        }
-
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    //redirecting the done issuing page
+                    Intent DoneKeyReturnIntent = new Intent(ReturnScanPerson.this, DoneKeyReturn.class);
+                    startActivity(DoneKeyReturnIntent);
+                    finish(); //used to delete the last activity history which we want to delete
                 }
                 else
                 {
@@ -134,4 +104,5 @@ public class IssueScanPerson extends AppCompatActivity
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

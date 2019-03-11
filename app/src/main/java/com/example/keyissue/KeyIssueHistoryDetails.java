@@ -104,7 +104,7 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
                         returned_by_roll.setText("Roll No: " + returned_by_roll_str);
                     }
                 } else {
-                    key_name.setText("Something went wrong in listing the issued keys history");
+                    key_name.setText("Something went wrong in getting the issued keys details");
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
