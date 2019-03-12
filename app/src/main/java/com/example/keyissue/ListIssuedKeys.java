@@ -38,9 +38,6 @@ public class ListIssuedKeys extends AppCompatActivity
     String issued_by_rolls[];
     String issued_ons[];
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -49,10 +46,6 @@ public class ListIssuedKeys extends AppCompatActivity
 
         text = findViewById(R.id.text);
         listIssuedKeys = findViewById(R.id.listIssuedKeys);
-
-        //checking cookies
-        sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
 
     //checking if phone if connected to net or not
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -108,18 +101,13 @@ public class ListIssuedKeys extends AppCompatActivity
                     IssuedKeyDetailsAdapter issuedKeyDetailsAdapter = new IssuedKeyDetailsAdapter();
                     listIssuedKeys.setAdapter(issuedKeyDetailsAdapter);
 
-                    //on clicking on list
-                    listIssuedKeys.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    //on clicking on any item of the list
+                    listIssuedKeys.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                    {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
                         {
-                            editor.putString("return_key_id", issue_ids[position]);
-                            editor.apply();
-
-                        //redirecting the key qr scan page for returning the key
-                            Intent ReturnScanKeyIntent = new Intent(ListIssuedKeys.this, ReturnScanKey.class);
-                            startActivity(ReturnScanKeyIntent);
-                            finish();
+                           Toast.makeText(ListIssuedKeys.this, key_names[position], Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

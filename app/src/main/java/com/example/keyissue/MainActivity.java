@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity
 //defining variables
     Button issue_btn;
     Button return_btn;
+    Button not_return_keys_btn;
     Button history_btn;
 
     @Override
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity
 
         issue_btn = findViewById(R.id.issue_btn);
         return_btn = findViewById(R.id.return_btn);
+        not_return_keys_btn = findViewById(R.id.not_return_keys_btn);
         history_btn = findViewById(R.id.history_btn);
 
     //on clicking on issue btn
@@ -42,6 +44,18 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view)
             {
             //redirecting to list issued keys page
+                Intent ListIssuedKeysIntent = new Intent(MainActivity.this, ReturnScanKey.class);
+                startActivity(ListIssuedKeysIntent);
+            }
+        });
+
+    //on clicking on not return keys btn
+        not_return_keys_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //redirecting to list issued keys page
                 Intent ListIssuedKeysIntent = new Intent(MainActivity.this, ListIssuedKeys.class);
                 startActivity(ListIssuedKeysIntent);
             }

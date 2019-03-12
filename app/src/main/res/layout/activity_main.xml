@@ -39,6 +39,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/not_return_keys_btn"
+            android:text="Not Returned Keys"
+            android:background="@color/sky"
+            android:textColor="@color/white"
+            android:layout_margin="10px"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/history_btn"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"
