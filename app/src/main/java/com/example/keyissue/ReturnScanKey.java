@@ -23,8 +23,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ReturnScanKey extends AppCompatActivity {
 
-    TextView key_name;
-    Button scan_key_qr_btn;
+   Button scan_key_qr_btn;
     TextView scan_key_qr_feed;
 
     SharedPreferences sharedPreferences;
@@ -41,59 +40,12 @@ public class ReturnScanKey extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_return_scan_key);
 
-        key_name = findViewById(R.id.key_name);
         scan_key_qr_btn = findViewById(R.id.scan_key_qr_btn);
         scan_key_qr_feed = findViewById(R.id.scan_key_qr_feed);
 
         //checking cookies
         sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
-        //getting the key_id from cookie
-        return_key_id = sharedPreferences.getString("return_key_id", "DNE");
-
-    //getting the key issue details of that issue_id from database
-        //checking if phone if connected to net or not
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            try {
-                //to list all the not returned keys
-                type = "get_key_issue_history_details";
-                String list_issued_keys_historyResult = (new DatabaseActions().execute(type, return_key_id).get());
-
-                if (!list_issued_keys_historyResult.equals("0") && !list_issued_keys_historyResult.equals("-1") && !list_issued_keys_historyResult.equals("Something went wrong")) {
-                    //parse JSON data
-                    JSONArray ja = new JSONArray(list_issued_keys_historyResult);
-                    JSONObject jo = null;
-
-                    for (int i = 0; i < ja.length(); i++)
-                    {
-                        jo = ja.getJSONObject(i);
-
-                        key_name_str = jo.getString("key_name");
-                        key_secret_str = jo.getString("key_secret");
-
-                        String issued_by_name_str = jo.getString("issued_by_name");
-                        String issued_by_roll_str = jo.getString("issued_by_roll");
-
-                        key_name.setText(key_name_str);
-                    }
-                } else {
-                    scan_key_qr_feed.setText("Something went wrong in getting the issued keys details");
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            scan_key_qr_feed.setText("Internet Connection is not available");
-        }
 
         //on clicking on scan key qr btn
         scan_key_qr_btn.setOnClickListener(new View.OnClickListener()

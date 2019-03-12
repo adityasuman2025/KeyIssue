@@ -11,17 +11,6 @@
         android:layout_height="match_parent"
         android:src="@drawable/key"/>
 
-    <TextView
-        android:id="@+id/key_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_marginTop="50px"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/colorAccent"
-        android:textSize="80px"
-        android:textStyle="bold"/>
-
     <Button
         android:id="@+id/scan_key_qr_btn"
         android:layout_width="wrap_content"
