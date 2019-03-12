@@ -75,9 +75,14 @@ public class DoneKeyReturn extends AppCompatActivity {
                 {
                     Bitmap person_imageBitmap = new ServerActions().execute(type, return_person_roll.toLowerCase()).get();
 
-                    if(person_imageBitmap == null)
+                    if(person_imageBitmap == null) //invalid person //not registered person
                     {
-                        text.setText("Person image not found on server");
+                        //redirecting to the unknown person screen
+                        Intent UnknownPersonIntent = new Intent(DoneKeyReturn.this, UnknownPerson.class);
+                        startActivity(UnknownPersonIntent);
+                        finish();
+
+                        //text.setText("Person image not found on server");
                     }
                     else
                     {

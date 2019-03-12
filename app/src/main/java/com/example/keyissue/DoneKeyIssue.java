@@ -75,7 +75,12 @@ public class DoneKeyIssue extends AppCompatActivity {
 
                     if(person_imageBitmap == null)
                     {
-                        text.setText("Person image not found on server");
+                        //redirecting to the unknown person screen
+                        Intent UnknownPersonIntent = new Intent(DoneKeyIssue.this, UnknownPerson.class);
+                        startActivity(UnknownPersonIntent);
+                        finish();
+
+                        //text.setText("Person image not found on server");
                     }
                     else
                     {

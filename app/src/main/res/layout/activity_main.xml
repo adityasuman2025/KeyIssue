@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/return_btn"
             android:text="Return"
-            android:background="@color/colorAccent"
+            android:background="@color/green"
             android:textColor="@color/white"
             android:layout_margin="10px"/>
 

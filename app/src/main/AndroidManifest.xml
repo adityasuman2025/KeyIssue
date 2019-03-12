@@ -18,7 +18,8 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SuccessScreen"></activity>
+        <activity android:name=".UnknownPerson"></activity>
+        <activity android:name=".SuccessScreen" />
         <activity
             android:name=".DoneKeyReturn"
             android:label="Confirm Key Return" />
