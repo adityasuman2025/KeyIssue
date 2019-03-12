@@ -73,7 +73,7 @@ public class DoneKeyIssue extends AppCompatActivity {
                 {
                     Bitmap person_imageBitmap = new ServerActions().execute(type, issue_person_roll.toLowerCase()).get();
 
-                    if(person_imageBitmap == null)
+                    if(person_imageBitmap == null)//invalid person //not registered person
                     {
                         //redirecting to the unknown person screen
                         Intent UnknownPersonIntent = new Intent(DoneKeyIssue.this, UnknownPerson.class);
