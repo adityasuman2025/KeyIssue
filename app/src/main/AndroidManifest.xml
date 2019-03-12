@@ -18,11 +18,15 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DoneKeyReturn"
+        <activity android:name=".SuccessScreen"></activity>
+        <activity
+            android:name=".DoneKeyReturn"
             android:label="Confirm Key Return" />
-        <activity android:name=".ReturnScanPerson"
+        <activity
+            android:name=".ReturnScanPerson"
             android:label="Return Scan Person" />
-        <activity android:name=".ReturnScanKey"
+        <activity
+            android:name=".ReturnScanKey"
             android:label="Return Scan Key" />
         <activity
             android:name=".KeyIssueHistoryDetails"
@@ -42,7 +46,6 @@
         <activity
             android:name=".IssueScanKey"
             android:label="Issue Scan Key" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

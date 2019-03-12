@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ReturnScanKey">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/key"/>
+
     <TextView
         android:id="@+id/key_name"
         android:layout_width="match_parent"
@@ -25,7 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="50px"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:textColor="@color/white"
         android:padding="15px"/>
 

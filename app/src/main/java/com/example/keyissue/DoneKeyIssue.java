@@ -1,6 +1,7 @@
 package com.example.keyissue;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -104,7 +105,9 @@ public class DoneKeyIssue extends AppCompatActivity {
                             {
                                 Toast.makeText(DoneKeyIssue.this, "Key Successfully Issued", Toast.LENGTH_LONG).show();
 
-                                //redirecting to the main page
+                            //redirecting to the success screen
+                                Intent SuccessIntent = new Intent(DoneKeyIssue.this, SuccessScreen.class);
+                                startActivity(SuccessIntent);
                                 finish();
                             }
                             else

@@ -106,7 +106,9 @@ public class DoneKeyReturn extends AppCompatActivity {
                             {
                                 Toast.makeText(DoneKeyReturn.this, "Key Successfully Returned", Toast.LENGTH_LONG).show();
 
-                            //redirecting to the main page
+                            //redirecting to the success screen
+                                Intent SuccessIntent = new Intent(DoneKeyReturn.this, SuccessScreen.class);
+                                startActivity(SuccessIntent);
                                 finish();
                             }
                             else

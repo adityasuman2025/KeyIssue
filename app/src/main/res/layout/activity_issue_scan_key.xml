@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".IssueScanKey">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/key"/>
+
     <Button
         android:id="@+id/scan_key_qr_btn"
         android:layout_width="wrap_content"
