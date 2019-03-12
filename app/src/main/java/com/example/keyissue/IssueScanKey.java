@@ -25,6 +25,8 @@ public class IssueScanKey extends AppCompatActivity
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+    String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -78,11 +80,14 @@ public class IssueScanKey extends AppCompatActivity
                 if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
                 {
-                    //checking if key is already issued
-                    String type = "check_key_issued";
-
                     try
                     {
+                    //checking if scanned key is a authorized key
+//                        type = "check_if_key_is_authorized";
+//                        String check_if_key_is_authorizedResult = new DatabaseActions().execute(type, key_name, key_secret).get();
+
+                    //checking if key is already issued
+                        type = "check_key_issued";
                         String check_key_issuedResult = new DatabaseActions().execute(type, key_name, key_secret).get();
 
                         if(check_key_issuedResult.equals("-1"))
@@ -96,7 +101,6 @@ public class IssueScanKey extends AppCompatActivity
                         else if(check_key_issuedResult.equals("1")) //key is already issued
                         {
                             scan_key_qr_feed.setText("This key has already been issued");
-
                         }
                         else if(check_key_issuedResult.equals("0")) //everything is fine // it can be issued
                         {

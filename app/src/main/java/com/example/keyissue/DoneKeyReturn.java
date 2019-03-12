@@ -120,7 +120,6 @@ public class DoneKeyReturn extends AppCompatActivity {
                             {
                                 text.setText("Something went wrong in returning the issued key");
                             }
-
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {

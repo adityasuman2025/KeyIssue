@@ -87,18 +87,44 @@ public class ReturnScanKey extends AppCompatActivity {
                 if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
                 {
-                //checking if the scanned key is right one
-                    if(key_name.equals(key_name_str) && key_secret.equals(key_secret_str))
+                //checking if scanned key is issued or not
+                    try
                     {
-                    //if the scanned key details is same as the details of key we want to return
-                    //redirecting the person qr scan page for returning the key
-                        Intent ReturnScanPersonIntent = new Intent(ReturnScanKey.this, ReturnScanPerson.class);
-                        startActivity(ReturnScanPersonIntent);
-                        finish();
-                    }
-                    else
-                    {
-                        scan_key_qr_feed.setText("This is wrong key!!");
+                        String type = "check_key_issued_for_returning";
+
+                        String check_key_issuedResult = new DatabaseActions().execute(type, key_name, key_secret).get();
+
+                        if(check_key_issuedResult.equals("-1"))
+                        {
+                            scan_key_qr_feed.setText("Database issue found");
+                        }
+                        else if (check_key_issuedResult.equals("Something went wrong"))
+                        {
+                            scan_key_qr_feed.setText(check_key_issuedResult);
+                        }
+                        else if(check_key_issuedResult.equals("0")) //that key is not issued
+                        {
+                            scan_key_qr_feed.setText("This key is not issued");
+                        }
+                        else if(Integer.parseInt(check_key_issuedResult) > 0) //everything is fine  //key is issued
+                        {
+                            editor.putString("return_key_id", check_key_issuedResult);
+                            editor.apply();
+
+                        //if the scanned key is issued and we want to return itx
+                        //redirecting the person qr scan page for returning the key
+                            Intent ReturnScanPersonIntent = new Intent(ReturnScanKey.this, ReturnScanPerson.class);
+                            startActivity(ReturnScanPersonIntent);
+                            finish();
+                        }
+                        else
+                        {
+                            scan_key_qr_feed.setText("unKnown Error");
+                        }
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
                 else
