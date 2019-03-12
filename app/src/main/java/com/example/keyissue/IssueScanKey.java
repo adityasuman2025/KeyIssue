@@ -83,35 +83,55 @@ public class IssueScanKey extends AppCompatActivity
                     try
                     {
                     //checking if scanned key is a authorized key
-//                        type = "check_if_key_is_authorized";
-//                        String check_if_key_is_authorizedResult = new DatabaseActions().execute(type, key_name, key_secret).get();
+                        type = "check_if_key_is_authorized";
+                        String check_if_key_is_authorizedResult = new DatabaseActions().execute(type, key_name, key_secret).get();
 
-                    //checking if key is already issued
-                        type = "check_key_issued";
-                        String check_key_issuedResult = new DatabaseActions().execute(type, key_name, key_secret).get();
-
-                        if(check_key_issuedResult.equals("-1"))
+                        if(check_if_key_is_authorizedResult.equals("-1"))
                         {
                             scan_key_qr_feed.setText("Database issue found");
                         }
-                        else if (check_key_issuedResult.equals("Something went wrong"))
+                        else if (check_if_key_is_authorizedResult.equals("Something went wrong"))
                         {
-                            scan_key_qr_feed.setText(check_key_issuedResult);
+                            scan_key_qr_feed.setText(check_if_key_is_authorizedResult);
                         }
-                        else if(check_key_issuedResult.equals("1")) //key is already issued
+                        else if(check_if_key_is_authorizedResult.equals("0")) //invalid key //not authorized key
                         {
-                            scan_key_qr_feed.setText("This key has already been issued");
+                            scan_key_qr_feed.setText("Invalid key!! \nThis key is not authorized.");
                         }
-                        else if(check_key_issuedResult.equals("0")) //everything is fine // it can be issued
+                        else if(check_if_key_is_authorizedResult.equals("1")) //everything is fine // key is authorized
                         {
-                            editor.putString("key_name", key_name);
-                            editor.putString("key_secret", key_secret);
-                            editor.apply();
+                        //checking if key is already issued
+                            type = "check_key_issued";
+                            String check_key_issuedResult = new DatabaseActions().execute(type, key_name, key_secret).get();
 
-                            //redirecting the scan person qr page
-                            Intent IssueScanPersonIntent = new Intent(IssueScanKey.this, IssueScanPerson.class);
-                            startActivity(IssueScanPersonIntent);
-                            finish(); //used to delete the last activity history which we want to delete
+                            if(check_key_issuedResult.equals("-1"))
+                            {
+                                scan_key_qr_feed.setText("Database issue found");
+                            }
+                            else if (check_key_issuedResult.equals("Something went wrong"))
+                            {
+                                scan_key_qr_feed.setText(check_key_issuedResult);
+                            }
+                            else if(check_key_issuedResult.equals("1")) //key is already issued
+                            {
+                                scan_key_qr_feed.setText("This key has already been issued");
+                            }
+                            else if(check_key_issuedResult.equals("0")) //everything is fine // it can be issued
+                            {
+                                editor.putString("key_name", key_name);
+                                editor.putString("key_secret", key_secret);
+                                editor.apply();
+
+                                //redirecting the scan person qr page
+                                Intent IssueScanPersonIntent = new Intent(IssueScanKey.this, IssueScanPerson.class);
+                                startActivity(IssueScanPersonIntent);
+                                finish(); //used to delete the last activity history which we want to delete
+                            }
+                            else
+                            {
+                                //scan_key_qr_feed.setText(check_key_issuedResult);
+                                scan_key_qr_feed.setText("unKnown Error");
+                            }
                         }
                         else
                         {
