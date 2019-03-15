@@ -34,8 +34,11 @@ public class ListIssuedKeys extends AppCompatActivity
 
     String issue_ids[];
     String key_names[];
+
     String issued_by_names[];
     String issued_by_rolls[];
+    String issued_by_phones[];
+
     String issued_ons[];
 
     @Override
@@ -66,8 +69,11 @@ public class ListIssuedKeys extends AppCompatActivity
 
                     issue_ids = new String[ja.length()];
                     key_names = new String[ja.length()];
+
                     issued_by_names = new String[ja.length()];
                     issued_by_rolls = new String[ja.length()];
+                    issued_by_phones = new String[ja.length()];
+
                     issued_ons = new String[ja.length()];
 
                     for (int i =0; i<ja.length(); i++)
@@ -79,6 +85,9 @@ public class ListIssuedKeys extends AppCompatActivity
 
                         String issued_by_name = jo.getString("issued_by_name");
                         String issued_by_roll = jo.getString("issued_by_roll");
+                        String issued_by_phone = jo.getString("issued_by_phone");
+
+                        //String issued_by_phone = "NA";
 
                         //getting and formatting date
                         String issued_on = jo.getString("issued_on");
@@ -94,6 +103,8 @@ public class ListIssuedKeys extends AppCompatActivity
 
                         issued_by_names[i] = issued_by_name;
                         issued_by_rolls[i] = issued_by_roll;
+                        issued_by_phones[i] = issued_by_phone;
+
                         issued_ons[i] = issued_onDate_str;
                     }
 
@@ -162,13 +173,15 @@ public class ListIssuedKeys extends AppCompatActivity
 
             TextView issued_by_name = view.findViewById(R.id.issued_by_name);
             TextView issued_by_roll = view.findViewById(R.id.issued_by_roll);
+            TextView issued_by_phone = view.findViewById(R.id.issued_by_phone);
 
             //setting the variables to a value
             key_name.setText(key_names[i]);
             issue_date.setText(issued_ons[i]);
 
-            issued_by_name.setText(issued_by_names[i]);
-            issued_by_roll.setText(issued_by_rolls[i]);
+            issued_by_name.setText("Name: " + issued_by_names[i]);
+            issued_by_roll.setText("Roll No: " + issued_by_rolls[i]);
+            issued_by_phone.setText("Contact No: " + issued_by_phones[i]);
 
             return view;
         }

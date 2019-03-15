@@ -57,5 +57,14 @@
             android:layout_height="wrap_content"
             android:text="Roll"
             android:textSize="45px"/>
+
+        <TextView
+            android:id="@+id/issued_by_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone No."
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="45px"/>
     </LinearLayout>
 </RelativeLayout>

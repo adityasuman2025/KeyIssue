@@ -98,20 +98,40 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
                         String returned_on_str = jo.getString("returned_on");
 
                         Date issued_onDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(issued_on_str);
-                        Date returned_onDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(returned_on_str);
-
                         DateFormat df = new SimpleDateFormat("dd MMM yyyy, h:mm a");
 
                         String issued_onDate_str = df.format(issued_onDate);
-                        String returned_onDate_str = df.format(returned_onDate);
 
-                        if(returned_onDate_str.equals("30 Nov 0002, 12:00 AM"))
+                    //if key not returned
+                        if(!returned_on_str.equals("null"))
                         {
-                            returned_onDate_str = "NA";
+                            Date returned_onDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(returned_on_str);
+                            String returned_onDate_str = df.format(returned_onDate);
+
+                            return_date.setText("Returned On: " + returned_onDate_str);
+                        }
+                        else
+                        {
+                            return_date.setText("Returned On: " + "NA");
                         }
 
-                        issue_date.setText("Issued On: " +  issued_onDate_str);
-                        return_date.setText("Returned On: " + returned_onDate_str);
+                        if(!returned_by_name_str.equals("null"))
+                        {
+                            returned_by_name.setText("Returned By: " + returned_by_name_str);
+                        }
+                        else
+                        {
+                            returned_by_name.setText("Returned By: " + "NA");
+                        }
+
+                        if(!returned_by_roll_str.equals("null"))
+                        {
+                            returned_by_roll.setText("Roll No: " + returned_by_roll_str);
+                        }
+                        else
+                        {
+                            returned_by_roll.setText("Roll No: " + "NA");
+                        }
 
                     //showing status
                         String status_str = jo.getString("status");
@@ -126,9 +146,7 @@ public class KeyIssueHistoryDetails extends AppCompatActivity {
 
                         issued_by_name.setText("Issued By: " + issued_by_name_str);
                         issued_by_roll.setText("Roll No: " + issued_by_roll_str);
-
-                        returned_by_name.setText("Returned By: " + returned_by_name_str);
-                        returned_by_roll.setText("Roll No: " + returned_by_roll_str);
+                        issue_date.setText("Issued On: " +  issued_onDate_str);
                     }
                 } else {
                     key_name.setText("Something went wrong in getting the issued keys details");
