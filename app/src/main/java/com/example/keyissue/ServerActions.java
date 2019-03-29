@@ -13,6 +13,8 @@ public class ServerActions  extends AsyncTask<String, Void, Bitmap>
 {
     String base_url = "http://172.16.26.43/key_issue_api/stud_img/";
 
+    //String base_url = "http://mngo.in/key_issue_api/stud_img/";
+
     @Override
     protected Bitmap doInBackground(String... params)
     {

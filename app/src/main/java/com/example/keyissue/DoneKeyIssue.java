@@ -75,12 +75,26 @@ public class DoneKeyIssue extends AppCompatActivity {
 
                     if(person_imageBitmap == null)//invalid person //not registered person
                     {
-                        //redirecting to the unknown person screen
-                        Intent UnknownPersonIntent = new Intent(DoneKeyIssue.this, UnknownPerson.class);
-                        startActivity(UnknownPersonIntent);
-                        finish();
+                    //inserting the invalid person into the database
+                        type = "insert_invalid_students_in_db";
 
-                        //text.setText("Person image not found on server");
+                        String insert_invalid_students_in_dbResult = new DatabaseActions().execute(type, issue_person_name, issue_person_roll).get();
+
+                        if(insert_invalid_students_in_dbResult.equals("Something went wrong") || insert_invalid_students_in_dbResult.equals("0")|| insert_invalid_students_in_dbResult.equals("-1"))
+                        {
+                            text.setText("Something went wrong in inserting invalid student into the database");
+                        }
+                        else if(insert_invalid_students_in_dbResult.equals("1")) //invalid student's details get successfully inserted into database
+                        {
+                            //redirecting to the unknown person screen
+                            Intent UnknownPersonIntent = new Intent(DoneKeyIssue.this, UnknownPerson.class);
+                            startActivity(UnknownPersonIntent);
+                            finish();
+                        }
+                        else
+                        {
+                            text.setText("Unknown Error");
+                        }
                     }
                     else
                     {
