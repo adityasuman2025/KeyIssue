@@ -80,25 +80,35 @@ public class DoneKeyIssue extends AppCompatActivity {
 
                         String insert_invalid_students_in_dbResult = new DatabaseActions().execute(type, issue_person_name, issue_person_roll).get();
 
-                        if(insert_invalid_students_in_dbResult.equals("Something went wrong") || insert_invalid_students_in_dbResult.equals("0")|| insert_invalid_students_in_dbResult.equals("-1"))
+                    //redirecting to the unknown person screen
+                        Intent UnknownPersonIntent = new Intent(DoneKeyIssue.this, UnknownPerson.class);
+                        startActivity(UnknownPersonIntent);
+                        finish();
+                    }
+                    else //that person is available in database
+                    {
+                        person_image.setImageBitmap(person_imageBitmap);
+
+                    //handling private keys, if that key is private //(private means, that key can only be issued only to some specific persons)
+                        type = "handling_private_keys";
+                        String handling_private_keysResult = new DatabaseActions().execute(type, key_name, issue_person_roll).get();
+
+                        if(handling_private_keysResult.equals("0")) //that key is not a private key //so it can be issued to any person
                         {
-                            text.setText("Something went wrong in inserting invalid student into the database");
+
                         }
-                        else if(insert_invalid_students_in_dbResult.equals("1")) //invalid student's details get successfully inserted into database
+                        else if(handling_private_keysResult.equals("1"))//that key is a private key and that person is also authorized for issuing that key
                         {
-                            //redirecting to the unknown person screen
-                            Intent UnknownPersonIntent = new Intent(DoneKeyIssue.this, UnknownPerson.class);
-                            startActivity(UnknownPersonIntent);
-                            finish();
+
+                        }
+                        else if(handling_private_keysResult.equals("Something went wrong") || handling_private_keysResult.equals("-1") || handling_private_keysResult.equals("2"))
+                        {
+
                         }
                         else
                         {
-                            text.setText("Unknown Error");
+
                         }
-                    }
-                    else
-                    {
-                        person_image.setImageBitmap(person_imageBitmap);
                     }
 
                 } catch (ExecutionException e) {
