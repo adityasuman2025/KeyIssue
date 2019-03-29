@@ -115,8 +115,8 @@ public class DoneKeyIssue extends AppCompatActivity {
                             finish();
                         }
                     }
-
-                } catch (ExecutionException e) {
+                }
+                catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -174,6 +174,5 @@ public class DoneKeyIssue extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }
