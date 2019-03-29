@@ -103,11 +103,11 @@ public class DoneKeyIssue extends AppCompatActivity {
                         }
                         else if(handling_private_keysResult.equals("Something went wrong") || handling_private_keysResult.equals("-1") || handling_private_keysResult.equals("2"))
                         {
-
+                        //redirecting to the person is not authorized for that key page
                         }
                         else
                         {
-
+                            //redirecting to the person is not authorized for that key page
                         }
                     }
 
