@@ -18,9 +18,9 @@ import java.net.URLEncoder;
 
 public class DatabaseActions extends AsyncTask<String,Void,String>
 {
-    String base_url = "http://172.16.26.43/key_issue_api/";
+    //String base_url = "http://172.16.26.43/key_issue_api/";
 
-    //String base_url = "http://mngo.in/key_issue_api/";
+    String base_url = "http://mngo.in/key_issue_api/";
 
     @Override
     protected String doInBackground(String... params)
