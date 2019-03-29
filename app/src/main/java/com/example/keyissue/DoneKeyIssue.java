@@ -95,19 +95,24 @@ public class DoneKeyIssue extends AppCompatActivity {
 
                         if(handling_private_keysResult.equals("0")) //that key is not a private key //so it can be issued to any person
                         {
-
+                            //everything is fine, key can be issued from this page by clicking on issue button
                         }
                         else if(handling_private_keysResult.equals("1"))//that key is a private key and that person is also authorized for issuing that key
                         {
-
+                            //everything is fine, key can be issued from this page by clicking on issue button
                         }
-                        else if(handling_private_keysResult.equals("Something went wrong") || handling_private_keysResult.equals("-1") || handling_private_keysResult.equals("2"))
+                        else if(handling_private_keysResult.equals("2"))
                         {
                         //redirecting to the person is not authorized for that key page
+                            Intent NotAuthorizedPersonIntent = new Intent(DoneKeyIssue.this, NotAuthorizedPerson.class);
+                            startActivity(NotAuthorizedPersonIntent);
+                            finish();
                         }
                         else
                         {
-                            //redirecting to the person is not authorized for that key page
+                        //redirecting to the something went wrong page
+                            Toast.makeText(this, "Something went wrong in handling private keys", Toast.LENGTH_LONG).show();
+                            finish();
                         }
                     }
 
