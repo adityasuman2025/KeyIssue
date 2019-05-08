@@ -18,7 +18,8 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NotAuthorizedPerson"></activity>
+        <activity android:name=".ListBlock"></activity>
+        <activity android:name=".NotAuthorizedPerson" />
         <activity android:name=".UnknownPerson" />
         <activity android:name=".SuccessScreen" />
         <activity
