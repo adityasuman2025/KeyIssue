@@ -18,9 +18,9 @@ import java.net.URLEncoder;
 
 public class DatabaseActions extends AsyncTask<String,Void,String>
 {
-    String base_url = "http://172.16.26.43/key_issue_api/";
+    //String base_url = "http://172.16.26.43/key_issue_api/";
 
-    //String base_url = "http://mngo.in/key_issue_api/";
+    String base_url = "http://mngo.in/key_issue_api/";
 
     @Override
     protected String doInBackground(String... params)
@@ -139,9 +139,11 @@ public class DatabaseActions extends AsyncTask<String,Void,String>
         else if (type.equals("list_not_returned_keys"))
         {
             String login_url = base_url + "list_not_returned_keys.php";
-            try {
+            try
+            {
+                String blockID = params[1];
 
-                //connecting with server
+            //connecting with server
                 url = new URL(login_url);
                 HttpURLConnection httpURLConnection = null;
                 httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -153,7 +155,7 @@ public class DatabaseActions extends AsyncTask<String,Void,String>
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-                String post_data = "";
+                String post_data = URLEncoder.encode("blockID", "UTF-8") + "=" + URLEncoder.encode(blockID, "UTF-8");
 
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                //redirecting to list issued keys page
+                //redirecting to list block page
                 Intent ListBlockIntent = new Intent(MainActivity.this, ListBlock.class);
                 startActivity(ListBlockIntent);
             }

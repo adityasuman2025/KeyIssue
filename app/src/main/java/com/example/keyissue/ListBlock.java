@@ -1,6 +1,7 @@
 package com.example.keyissue;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,6 +55,10 @@ public class ListBlock extends AppCompatActivity {
             //making cookie of the selected block
                 editor.putString("blockID", blockID);
                 editor.apply();
+
+            //redirecting to list issued keys page
+                Intent ListIssuedKeysIntent = new Intent(ListBlock.this, ListIssuedKeys.class);
+                startActivity(ListIssuedKeysIntent);
 
                 //Toast.makeText(ListBlock.this, blockID, Toast.LENGTH_SHORT).show();
             }
