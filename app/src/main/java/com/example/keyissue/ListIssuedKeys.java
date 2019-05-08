@@ -41,6 +41,9 @@ public class ListIssuedKeys extends AppCompatActivity
 
     String issued_ons[];
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -50,82 +53,87 @@ public class ListIssuedKeys extends AppCompatActivity
         text = findViewById(R.id.text);
         listIssuedKeys = findViewById(R.id.listIssuedKeys);
 
-    //checking if phone if connected to net or not
+    //checking cookies
+        sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        //checking if phone if connected to net or not
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
         {
             try
             {
+                text.setText();
             //to list all the not returned keys
-                type= "list_not_returned_keys";
-                String list_not_returned_keysResult = (new DatabaseActions().execute(type).get());
-
-                if(!list_not_returned_keysResult.equals("0") && !list_not_returned_keysResult.equals("-1") && !list_not_returned_keysResult.equals("Something went wrong"))
-                {
-                    //parse JSON data
-                    JSONArray ja = new JSONArray(list_not_returned_keysResult);
-                    JSONObject jo = null;
-
-                    issue_ids = new String[ja.length()];
-                    key_names = new String[ja.length()];
-
-                    issued_by_names = new String[ja.length()];
-                    issued_by_rolls = new String[ja.length()];
-                    issued_by_phones = new String[ja.length()];
-
-                    issued_ons = new String[ja.length()];
-
-                    for (int i =0; i<ja.length(); i++)
-                    {
-                        jo = ja.getJSONObject(i);
-
-                        String issue_id = jo.getString("id");
-                        String key_name = jo.getString("key_name");
-
-                        String issued_by_name = jo.getString("issued_by_name");
-                        String issued_by_roll = jo.getString("issued_by_roll");
-                        String issued_by_phone = jo.getString("issued_by_phone");
-
-                        //String issued_by_phone = "NA";
-
-                        //getting and formatting date
-                        String issued_on = jo.getString("issued_on");
-
-                        Date issued_onDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(issued_on);
-
-                        DateFormat df = new SimpleDateFormat("dd MMM yyyy, h:mm a");
-
-                        String issued_onDate_str = df.format(issued_onDate);
-
-                        issue_ids[i] = issue_id;
-                        key_names[i] = key_name;
-
-                        issued_by_names[i] = issued_by_name;
-                        issued_by_rolls[i] = issued_by_roll;
-                        issued_by_phones[i] = issued_by_phone;
-
-                        issued_ons[i] = issued_onDate_str;
-                    }
-
-                    //listing not returned keys
-                    IssuedKeyDetailsAdapter issuedKeyDetailsAdapter = new IssuedKeyDetailsAdapter();
-                    listIssuedKeys.setAdapter(issuedKeyDetailsAdapter);
-
-                    //on clicking on any item of the list
-                    listIssuedKeys.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                    {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-                        {
-                           Toast.makeText(ListIssuedKeys.this, key_names[position], Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                else
-                {
-                    text.setText("Something went wrong in listing not-returned keys");
-                }
+//                type= "list_not_returned_keys";
+//                String list_not_returned_keysResult = (new DatabaseActions().execute(type).get());
+//
+//                if(!list_not_returned_keysResult.equals("0") && !list_not_returned_keysResult.equals("-1") && !list_not_returned_keysResult.equals("Something went wrong"))
+//                {
+//                    //parse JSON data
+//                    JSONArray ja = new JSONArray(list_not_returned_keysResult);
+//                    JSONObject jo = null;
+//
+//                    issue_ids = new String[ja.length()];
+//                    key_names = new String[ja.length()];
+//
+//                    issued_by_names = new String[ja.length()];
+//                    issued_by_rolls = new String[ja.length()];
+//                    issued_by_phones = new String[ja.length()];
+//
+//                    issued_ons = new String[ja.length()];
+//
+//                    for (int i =0; i<ja.length(); i++)
+//                    {
+//                        jo = ja.getJSONObject(i);
+//
+//                        String issue_id = jo.getString("id");
+//                        String key_name = jo.getString("key_name");
+//
+//                        String issued_by_name = jo.getString("issued_by_name");
+//                        String issued_by_roll = jo.getString("issued_by_roll");
+//                        String issued_by_phone = jo.getString("issued_by_phone");
+//
+//                        //String issued_by_phone = "NA";
+//
+//                        //getting and formatting date
+//                        String issued_on = jo.getString("issued_on");
+//
+//                        Date issued_onDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(issued_on);
+//
+//                        DateFormat df = new SimpleDateFormat("dd MMM yyyy, h:mm a");
+//
+//                        String issued_onDate_str = df.format(issued_onDate);
+//
+//                        issue_ids[i] = issue_id;
+//                        key_names[i] = key_name;
+//
+//                        issued_by_names[i] = issued_by_name;
+//                        issued_by_rolls[i] = issued_by_roll;
+//                        issued_by_phones[i] = issued_by_phone;
+//
+//                        issued_ons[i] = issued_onDate_str;
+//                    }
+//
+//                    //listing not returned keys
+//                    IssuedKeyDetailsAdapter issuedKeyDetailsAdapter = new IssuedKeyDetailsAdapter();
+//                    listIssuedKeys.setAdapter(issuedKeyDetailsAdapter);
+//
+//                    //on clicking on any item of the list
+//                    listIssuedKeys.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                    {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+//                        {
+//                           Toast.makeText(ListIssuedKeys.this, key_names[position], Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                }
+//                else
+//                {
+//                    text.setText("Something went wrong in listing not-returned keys");
+//                }
             }
             catch (ExecutionException e) {
                 e.printStackTrace();

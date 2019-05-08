@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 //redirecting to list issued keys page
-                Intent ListIssuedKeysIntent = new Intent(MainActivity.this, ListIssuedKeys.class);
-                startActivity(ListIssuedKeysIntent);
+                Intent ListBlockIntent = new Intent(MainActivity.this, ListBlock.class);
+                startActivity(ListBlockIntent);
             }
         });
 

@@ -18,10 +18,11 @@
         android:roundIcon="@drawable/iitp_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListBlock"></activity>
         <activity android:name=".NotAuthorizedPerson" />
         <activity android:name=".UnknownPerson" />
         <activity android:name=".SuccessScreen" />
+        <activity android:name=".ListBlock"
+            android:label="List Block" />
         <activity
             android:name=".DoneKeyReturn"
             android:label="Confirm Key Return" />
